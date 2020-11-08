@@ -17,3 +17,7 @@ source .bash_profile #当配置完成后运行，让配置生效
 
 > 将"PATH=$PATH:$JAVA_HOME/bin"中的字符串“$PATH:$JAVA_HOME/bin”合并到原来已存在的PATH中；在原有PATH字符串后面加上“:$PATH:$JAVA_HOME/bin”，
 >  PATH=$PATH:$JAVA_HOME/bin
+
+## 配置 intelliJ idea
+- file > project structure ![图例](./img/java/idea-icon-001.png)
+- 设置jdk(注意：jdk版本要与语法等级一一对应) ![jdk设置](./img/java/idea-icon-002.png)
