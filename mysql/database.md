@@ -1,6 +1,6 @@
 ## 一、创建数据库
 - show databases; <!-- 查看数据库 -->
-- create database database_name; <!--创建数据库-->
+- create database database_name default character set utf8; <!--创建数据库-->
 - show create database database_name; <!--查看创建好的数据库定义-->
 - drop database database_name; <!--删除数据库-->
 - use aaa; <!--选择当前数据库-->
@@ -19,8 +19,8 @@
   ```sql
     use ssaa;
     create table emp(
-        id int,
-        name varchar(100),
+        id int(10) primary key auto_increment,
+        name varchar(100) comment "备注",
         sex char(6),
         birthday date,
         salary float(10,2)
