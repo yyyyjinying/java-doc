@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  </head>
+  <body>
+    <input type="text" id="txt" />
+    <span id="sp"></span>
+    <div id="app">
+      {{ message }}
+      <span v-bind:title="message">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！
+      </span>
+      <div>{{reversedMessage}}</div>
+      <ul>
+        <todo-item
+          v-for="item in groceryList"
+          v-bind:todo="item"
+          :key="item.id"
+        ></todo-item>
+      </ul>
+    </div>
+  </body>
+  <script>
+    var txt = document.getElementById("txt"),
+      sp = document.getElementById("sp"),
+      obj = {};
+
+    // 给对象obj添加msg属性，并设置setter访问器
+    Object.defineProperty(obj, "msg", {
+      // 设置 obj.msg  当obj.msg反生改变时set方法将会被调用
+      set: function (newVal) {
+        // 当obj.msg被赋值时 同时设置给 input/span
+        txt.value = newVal;
+        sp.innerText = newVal;
+      },
+    });
+
+    // 监听文本框的改变 当文本框输入内容时 改变obj.msg
+    txt.addEventListener("keyup", function (event) {
+      obj.msg = event.target.value;
+    });
+  </script>
+  <script>
+    Vue.component("todo-item", {
+      props: ["todo", "key"],
+      template: `<li key={{key}}>这是个待办项{{todo.text}}</li>`,
+    });
+    var app = new Vue({
+      el: "#app",
+      data: {
+        groceryList: [
+          { id: 0, text: "蔬菜" },
+          { id: 1, text: "奶酪" },
+          { id: 2, text: "随便其它什么人吃的东西" },
+        ],
+        message: "页面加载于 " + new Date().toLocaleString(),
+      },
+      computed: {
+        // 计算属性的 getter
+        reversedMessage: function () {
+          // `this` 指向 vm 实例
+          return this.message.split("").reverse().join("");
+        },
+      },
+    });
+  </script>
+</html>
