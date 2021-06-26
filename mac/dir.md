@@ -50,7 +50,8 @@ ls	显示当前目录下的内容
 ls -la	显示当前目录下的详细内容	
 ls -A	显示当前目录下的内容	含点(.)开头的文件
 mkdir	创建目录	mkdir dir_name
-touch file.format	创建指定格式的文件	
+touch file.format	创建指定格式的文件
+echo '内容'>> a.txt	
 mvdir	移动目录	mvdir dir1 dir2
 mv	移动/重命名---文件/文件夹	mv dir1 dir2
 MAC没有重命名的命令
@@ -127,3 +128,6 @@ CTRL+K：删除光标后所有字符
 CTRL+W：删除光标前一个单词（根据空格识别单词分隔）
 CTRL+Y：粘贴之前（CTRL+U/K/W）删除的内容
 CTRL+C：中断操作
+
+## mac本机IP
+- ifconfig | grep "inet " | grep -v 127.0.0.1
