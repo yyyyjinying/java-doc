@@ -131,3 +131,11 @@ CTRL+C：中断操作
 
 ## mac本机IP
 - ifconfig | grep "inet " | grep -v 127.0.0.1
+
+## 解压文件
+- tar zxf jdk1……
+- rm -rf aaaa……
+- cp -r aaa ../jdk8
+cp -r  的作用是递归，可复制目录，如果复制目录必须加此选项。
+cp -R 的作用仅仅是复制目录。
+- vim /etc/profile
