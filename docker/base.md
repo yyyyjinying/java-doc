@@ -19,12 +19,14 @@
 ## 虚拟机 IP 172.16.147.133  // 172.16.147.138
 
 ## 重启nginx
+- sudo docker exec -it storage bash
 - ps -ef|grep nginx  // 查看进程
 - 重启 /etc/nginx/sbin/nginx -s reload
 - vi /etc/nginx/conf/nginx.conf
 
 ## 文件服务器重新替换IP  
-- ifconfig
+- ifconfig 查看mac系统的IP - eno:inet 192.168.200.15
+- ifconfig 查看ubuntu的ip - ens33:inet
 - 替换 fdfs_client.conf中的IP地址
 - 拷贝执行
 sudo docker stop storage && sudo docker stop tracker && sudo docker rm storage && sudo docker rm tracker && sudo docker run -d --name tracker --net=host morunchang/fastdfs sh tracker.sh && sudo docker run -d --name storage --net=host -e TRACKER_IP=172.16.147.141:22122 -e GROUP_NAME=group1 morunchang/fastdfs sh storage.sh && sudo docker update --restart=always tracker &&
