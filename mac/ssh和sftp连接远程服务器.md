@@ -1,7 +1,14 @@
 ### ssh
 - ssh root@121.37.162.252 (公网ip)
-### sftp
-- sftp -P 22 root@121.37.162.252
+### sftp给远程服务器上传下载文件
+- sftp -P 22 root@121.37.162.252  // sftp连接172.16.147.145
+- sftp> get /var/www/fuyatao/index.php  /home/fuyatao/  // 下载文件
+- put /Users/yyyyjinying/desktop/redis-3.0.0.tar.gz /usr/local/tmp // 上传文件到远程服务器
+- 
+你如果不知道远程主机的目录是什么样， pwd命令可以帮您查询远程主机的当前路径。查询本机当前工作目录 lpwd.
+改变路径可以用cd ，改变本机路径可以用 lcd;
+ls rm rmdir mkdir 这些命令都可以使用。同理调用本机都是加 l , 即 lls lrm.
+要离开sftp，用exit 或quit、 bye 均可。详细情况可以查阅 man  sftp.
 
 ps -ef |grep tomcat
 
