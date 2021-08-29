@@ -1,3 +1,22 @@
+### mac中，只有在docker服务启动了之后，才可以在终端使用docker命令
+- docker ps // 列出正在运行的容器
+- docker ps -a // 列出所有的容器
+- docker images // 查看镜像
+- // 删除镜像时，先删除容器，
+- docker rm ID
+- // 删除镜像
+- docker rmi ID
+- 
+- - -i: 交互式操作
+- - -t: 终端
+- - /bin/bash：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 /bin/bash
+- // 后台创建一个容器(但没有执行)
+- sudo docker run -d -p 9200:9200 -p 9300:9300 --name elasticsearch elasticsearch
+- docker ps -a // 查看创建的容器
+- // 运行指定容器
+- docker start elasticsearch
+- docker ps // 查看运行容器
+- sudo docker run -di --name=changgou_elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch
 ### 安装docker的远程镜像
 - vim /etc/docker/daemon.json
 - sudo systemctl daemon-reload 
@@ -14,6 +33,127 @@
 - sudo apt install curl
 - sudo curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 - docker -v
+
+- // 查看当前启动的容器
+- sudo docker ps
+- -it // 以 交互模式启动  
+- -p 8009:80 // 指将外部访问8009映射到内部的80端口
+- -d // 附加进程方式启动  
+- // 关闭容器的限时，如果超时未能关闭则用kill强制关闭，默认值10s，这个时间用于容器的自己保存状态
+- docker stop -t=60 容器ID或容器名
+- docker kill 容器ID或容器名 // 直接关闭容器
+- docker rm [NAME/CONTAINER ID]  // 删除一个容器
+
+### elasticsearch
+- sudo docker pull elasticsearch:5.6.8 // 镜像下载
+- // 安装es容器
+- sudo docker run -di --name=changgou_elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch:5.6.8
+- // 登录容器
+- sudo docker exec -it changgou_elasticsearch /bin/bash
+- // 查看目录
+- dir
+- 进入config目录
+- cd config
+- vi elasticsearch.yml
+- 
+- // docker安装vim编辑器
+- apt-get update
+- apt-get install vim
+
+- vi elasticsearch.yml
+- - transport.host: 0.0.0.0
+- - cluster.name: my-application
+- - http.cors.enabled: true
+- - http.cors.allow-origin: "*"
+  
+- sudo unzip elasticsearch-analysis-ik-5.6.8.zip
+。 mac中，只有在docker服务启动了之后，才可以在终端使用docker命令
+- docker ps // 列出正在运行的容器
+- docker ps -a // 列出所有的容器
+- docker images // 查看镜像
+- // 删除镜像时，先删除容器，
+- docker rm ID
+- // 删除镜像
+- docker rmi ID
+- 
+- - -i: 交互式操作
+- - -t: 终端
+- - /bin/bash：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此用的是 /bin/bash
+- // 后台创建一个容器(但没有执行)
+- sudo docker run -d -p 9200:9200 -p 9300:9300 --name elasticsearch elasticsearch
+- docker ps -a // 查看创建的容器
+- // 运行指定容器
+- docker start elasticsearch
+- docker ps // 查看运行容器
+- sudo docker run -di --name=changgou_elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch
+### 安装docker的远程镜像
+- vim /etc/docker/daemon.json
+- sudo systemctl daemon-reload 
+- sudo systemctl restart docker 
+  
+- docker images 来列出本地主机上的镜像。
+- docker run -t -i ubuntu:15.10 /bin/bash  // 交互式 终端 
+- tcp端口和udp端口
+- docker exec -it storage /bin/bash
+- cd /etc/nginx
+
+
+### 安装docker
+- sudo apt install curl
+- sudo curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+- docker -v
+
+- // 查看当前启动的容器
+- sudo docker ps
+- -it // 以 交互模式启动  
+- -p 8009:80 // 指将外部访问8009映射到内部的80端口
+- -d // 附加进程方式启动 
+- -e // 指定容器环境变量 
+- // 关闭容器的限时，如果超时未能关闭则用kill强制关闭，默认值10s，这个时间用于容器的自己保存状态
+- docker stop -t=60 容器ID或容器名
+- docker kill 容器ID或容器名 // 直接关闭容器
+- docker rm [NAME/CONTAINER ID]  // 删除一个容器
+
+### elasticsearch
+- sudo docker pull elasticsearch:5.6.8 // 镜像下载
+- // 安装es容器
+- sudo docker run -di --name=changgou_elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch:5.6.8
+- // 登录容器
+- sudo docker exec -it changgou_elasticsearch /bin/bash
+- // 查看目录
+- dir
+- 进入config目录
+- cd config
+- vi elasticsearch.yml
+- 
+- // docker安装vim编辑器
+- apt-get update
+- apt-get install vim
+
+- vi elasticsearch.yml
+- - transport.host: 0.0.0.0
+- - cluster.name: my-application
+- - http.cors.enabled: true
+- - http.cors.allow-origin: "*"
+  
+- sudo unzip elasticsearch-analysis-ik-5.6.8.zip
+- mv elasticsearch ik // 修改名称    
+- sudo docker cp ./ik changgou_elasticsearch:/usr/share/elasticsearch/plugins
+#### (2)IK分词器测试
+- http://172.16.147.158:9200/_analyze?analyzer=ik_smart&pretty=true&text=我是程序员
+- http://172.16.147.158:9200/_analyze?analyzer=ik_max_word&pretty=true&text=我是程序员
+### (2)安装kibana容器
+- sudo docker pull docker.io/kibana:5.6.8
+- sudo docker run -it -d --name kibana --restart=always -p 5601:5601 kibana:5.6.8
+- sudo docker run -it -d -e ELASTICSEARCH_URL=http://172.16.147.158:9200 --name kibana --restart=always -p 5601:5601 kibana:5.6.8
+
+http://172.16.147.159:5601/app/kibana#/management?_g=()
+### 动态更新容器配置
+- sudo docker update  --restart=always kibana
+sudo docker stop kibana
+sudo docker rm kibana
+sudo docker run -it -d -e ELASTICSEARCH_URL=http://172.16.147.158:9200 --name kibana --restart=always -p 5601:5601 kibana:5.6.8
+
 
 ## ip 192.168.200.14  // N108-5.0
 ## 虚拟机 IP 172.16.147.133  // 172.16.147.138

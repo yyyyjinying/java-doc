@@ -59,7 +59,7 @@
 - command+shift+上下箭头 : 把代码上移或着下移
 - command+[ 或 ] : 可以跳到大括号的开头结尾
 - command+f12 :可以显示当前文件的结构
-- command+option+B :可以导航到一个抽象方法的实现代码
+
 - command+shift+* :列编辑
 - alt+f8 : debug时选中查看值f8相当于eclipse的f6跳到下一步
 - shift+f8 :相当于eclipse的f8跳到下一个断点
@@ -68,6 +68,8 @@
 - ctrl+shift+f10 :正常运行java类
 - command+f2 :停止运行
 
+
+- command+option+B :可以导航到一个抽象方法的实现代码
 
 
 
