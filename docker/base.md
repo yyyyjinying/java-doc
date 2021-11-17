@@ -1,4 +1,17 @@
-### mac中，只有在docker服务启动了之后，才可以在终端使用docker命令
+### 如果无法获取虚拟机IP
+- sudo dhclient ens33
+- ifconfig -a
+
+### 开机启动
+- sudo docker update  --restart=always kibana
+- docker run // 创建一个新的容器并运行一个命令
+
+### docker默认安装目录:/var/lib/docker
+### docker安装redis
+- sudo docker pull redis
+  
+- ### mac中，只有在docker服务启动了之后，才可以在终端使用docker命令
+- systemctl restart docker
 - docker ps // 列出正在运行的容器
 - docker ps -a // 列出所有的容器
 - docker images // 查看镜像

@@ -19,7 +19,7 @@
   ```sql
     use ssaa;
     create table emp(
-        id int(10) primary key auto_increment,
+        id int(10) primary key AUTO_INCREMENT,
         name varchar(100) comment "备注",
         sex char(6),
         birthday date,
@@ -45,6 +45,9 @@
   - show tables;
   - describe emp; <!--简写：desc emp;-->
   - show create table <表名\G>; <!--加上’\G‘显示直观-->
+  - drop table s_user; <!--删除表结构->
+  - delete table s_user; <!--只删除表数据-->
+  - 
   ### 修改数据表
   - alter table emp1 character set utf8; <!--设置字符编码-->
   - alter table <旧表名> rename <新表名>; <!--修改表名-->

@@ -1,7 +1,7 @@
 ### ssh
 - ssh root@121.37.162.252 (公网ip)
 ### sftp给远程服务器上传下载文件
-- sftp -P 22 root@121.37.162.252  // sftp连接121.37.162.252(远程IP)
+- sftp -P 22 root@172.16.147.168  // sftp连接121.37.162.252(远程IP)
 - sftp> get /var/www/fuyatao/index.php  /home/fuyatao/  // 下载文件
 - put /Users/yyyyjinying/desktop/redis-3.0.0.tar.gz /usr/local/tmp // 上传文件到远程服务器
 - 

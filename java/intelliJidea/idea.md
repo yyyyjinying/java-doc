@@ -69,7 +69,19 @@
 - command+f2 :停止运行
 
 
-- command+option+B :可以导航到一个抽象方法的实现代码
+- command+option+B :查找接口的实现类
+- command+N ：全局查找类
+- commond+O : 快速override重写类方法
+- command+option+L : 快速格式化
+-  shift+enter : 换到下一行
+- command+N : 查找类
+- command+shift+N : 查找文件
+- command+R : 替换
+- ctrl+H : 查看一个接口的子接口或实现类的快捷键
+- ctrl+shift+R : 可以在整个工程或着某个目录下面替换变量
+
+
+
 
 
 

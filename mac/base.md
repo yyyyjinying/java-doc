@@ -1,3 +1,16 @@
+## 常见命令
+- sudo -i // 切到root用户
+- exit // 退出root用户到普通用户
+- 
+- sudo su // 切到root用户
+- sudo su - yyyyjingying // 切换到yyyyjinying用户 
+- sudo mkdir test && cd test
+- sudo echo hello world >> text.txt
+- // 查看信息
+- ls -l
+- touch hello.text
+- vim world.text
+- zip -r dist.zip ./
 ## mac自带的快速截屏 commond + shift + 4
 - pwd # 查看当前文件
 - chgrp：更改文件属组
