@@ -1,0 +1,276 @@
+# 重写功能
+如果你想重新覆盖现有的功能或者界面，可能需要继承某个抽象类，重写对应的方法；
+# 如果你想重新使用一个加密算法
+可以使用多态的特性，统一调用该接口功能，重新实现这个接口，为了方便维护，@configuration加@Bean来实现新的对象，通过@Autowired注入指定的接口，就可以使用对应的接口方法啦；
+
+# 如果你想知道某个功能，试图修改它
+比如用户登录，修改用户名和密码的验证规则，常见的都在filter过滤器中判断，你先猜，然后，command+N全局搜索，想要的UsernamePasswordFilter就会找到对应的实现类，在接着找到设置判断值的地方就可以推断对应的方法了；
+# 如果要求传入一个对象参数
+传入一个对象参数，往往需要约定一个规范，不可能随便创建对象，而是在多态的特性，实现对应的接口或者抽象方法，重写对应的方法，来改变添加新功能；
+
+# @Bean和@Component
+俩的相似处和不同，相同都是通过@Autowired自动注入对象；不同是，@Bean是 一个方法return一个对象（rturn new ……）返回值是一个接口；而@Component是直接装饰一个实现类；
+
+# "@myServiceImpl.hasPermission(request, authentication)"是什么意思不理解
+.anyRequest().access("@myServiceImpl.hasPermission(request, authentication)");
+
+# 对 “Collection<? extends GrantedAuthority> ”的理解
+Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+authorities.contains(new SimpleGrantedAuthority(request.getRequestURI()));
+结论 SimpleGrantedAuthority是GrantedAuthority的实现类
+解释： `List<? extends T> 表示List中存放的都是T或者T的子类型`
+`List<? super T>表示List中存放的都是T或者T的父类型`
+```java
+List<? super Integer> foo = new ArrayList<Integer>();
+List<? super Integer> foo = new ArrayList<Number>();
+List<? super Integer> foo = new ArrayList<Object>();
+```
+# 注解？什么是注解，如何识别它的功能
+```java
+// 例如：
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+public @interface Secured {
+    String[] value(); // 和 String value();有什么区别
+}
+
+public enum ElementType {
+    TYPE,               /* 类、接口（包括注释类型）或枚举声明  */
+
+    FIELD,              /* 字段声明（包括枚举常量）  */
+
+    METHOD,             /* 方法声明  */
+
+    PARAMETER,          /* 参数声明  */
+
+    CONSTRUCTOR,        /* 构造方法声明  */
+
+    LOCAL_VARIABLE,     /* 局部变量声明  */
+
+    ANNOTATION_TYPE,    /* 注释类型声明  */
+
+    PACKAGE             /* 包声明  */
+}
+@Deprecated  -- @Deprecated 所标注内容，不再被建议使用。
+@Override    -- @Override 只能标注方法，表示该方法覆盖父类中的方法。
+@Documented  -- @Documented 所标注内容，可以出现在javadoc中。
+@Inherited   -- @Inherited只能被用来标注“Annotation类型”，它所标注的Annotation具有继承性。
+@Retention   -- @Retention只能被用来标注“Annotation类型”，而且它被用来指定Annotation的RetentionPolicy属性。
+@Target      -- @Target只能被用来标注“Annotation类型”，而且它被用来指定Annotation的ElementType属性。
+@SuppressWarnings -- @SuppressWarnings 所标注内容产生的警告，编译器会对这些警告保持静默。
+
+
+@Retention(RetentionPolicy.RUNTIME) -- 意味着，编译器会将 Inherited 的信息保留在 .class 文件中，并且能被虚拟机读取
+@interface --- 意味着,实现了 java.lang.annotation.Annotation 接口, 就是一个注解。
+@Documented -- 它的作用是说明该注解能出现在 javadoc 中。
+@Target(ElementType.ANNOTATION_TYPE) -- 它的作用是指定 Inherited 的类型是 ANNOTATION_TYPE。这就意味着，@Inherited 只能被用来标注 "Annotation 类型"
+// @Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})
+@Inherited 的含义是，它所标注的Annotation将具有继承性。
+```
+@Override 重写
+@Deprecated 拒绝
+@SuppressWarnings 阻止警告、阻止提示
+@Retention 保留、保存- 标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。
+@Documented - 标记这些注解是否包含在用户文档中。
+@Target - 标记这个注解应该是哪种 Java 成员 （g：盖）
+@Inherited - 标记这个注解是继承于哪个注解类(默认 注解并没有继承于任何子类)
+@FunctionalInterface - Java 8 开始支持，标识一个匿名函数或函数式接口。
+@SafeVarargs - Java 7 开始支持，忽略任何使用参数为泛型变量的方法或构造函数调用产生的警告。
+@Repeatable - Java 8 开始支持，标识某注解可以在同一个声明上使用多次。
+# 记住我的业务逻辑必须搞懂 ？！
+
+# 断言
+```java
+// 断言代码片段
+public LogoutConfigurer<H> addLogoutHandler(LogoutHandler logoutHandler) {
+    Assert.notNull(logoutHandler, "logoutHandler cannot be null");
+    this.logoutHandlers.add(logoutHandler);
+    return this;
+}
+```
+
+# 什么是跨站脚本伪造
+客户端与服务进行交互时，由于http协议本身是无状态协议，所以引入了cookie进行记录
+客户身份，在cookie中灰存放session_id用来识别客户身份的，在跨域的情况下，session_id
+可能被第三方恶意劫持，通过这个session_id向服务端发起请求时，服务端会认为这个请求是合法的，可能发生很多意想不到的事情。
+请求携带token匹配是否成功可以防止CSRF攻击；
+
+# SpEL（Spring Expression Language）表达式
+
+# ServerHttpRequest.Builder headers(Consumer<HttpHeaders> var1);
+参数是一个函数（函数的参数是HttpHeaders）
+```java
+Consumer<HttpHeaders> headers = (header) -> {
+    header.set("X-zhao","zhaojinying");
+    header.set("X-jin","ojinying");****
+};
+```
+# 格式化的字符串转化为对象（map结构，list结构，pojo结构）
+```java
+String claims = jwt.getClaims();
+Map map = JSON.parseObject(claims, Map.class);  // 转化为map
+ JsonUtils.jsonToList("aa",List.class);
+        JsonUtils.jsonToPojo("bb".pojo)
+
+```
+# OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
+总结如果一个对象中有你想要的值，而这个对象没有get方法时，可以全局查找他的父类甚至强制转化后，寻找对应的方法；
+
+。写功能
+如果你想重新覆盖现有的功能或者界面，可能需要继承某个抽象类，重写对应的方法；
+# 如果你想重新使用一个加密算法
+可以使用多态的特性，统一调用该接口功能，重新实现这个接口，为了方便维护，@configuration加@Bean来实现新的对象，通过@Autowired注入指定的接口，就可以使用对应的接口方法啦；
+
+# 如果你想知道某个功能，试图修改它
+比如用户登录，修改用户名和密码的验证规则，常见的都在filter过滤器中判断，你先猜，然后，command+N全局搜索，想要的UsernamePasswordFilter就会找到对应的实现类，在接着找到设置判断值的地方就可以推断对应的方法了；
+# 如果要求传入一个对象参数
+传入一个对象参数，往往需要约定一个规范，不可能随便创建对象，而是在多态的特性，实现对应的接口或者抽象方法，重写对应的方法，来改变添加新功能；
+
+# @Bean和@Component
+俩的相似处和不同，相同都是通过@Autowired自动注入对象；不同是，@Bean是 一个方法return一个对象（rturn new ……）返回值是一个接口；而@Component是直接装饰一个实现类；
+
+# "@myServiceImpl.hasPermission(request, authentication)"是什么意思不理解
+.anyRequest().access("@myServiceImpl.hasPermission(request, authentication)");
+
+# 对 “Collection<? extends GrantedAuthority> ”的理解
+Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+authorities.contains(new SimpleGrantedAuthority(request.getRequestURI()));
+结论 SimpleGrantedAuthority是GrantedAuthority的实现类
+解释： `List<? extends T> 表示List中存放的都是T或者T的子类型`
+`List<? super T>表示List中存放的都是T或者T的父类型`
+```java
+List<? super Integer> foo = new ArrayList<Integer>();
+List<? super Integer> foo = new ArrayList<Number>();
+List<? super Integer> foo = new ArrayList<Object>();
+```
+# 注解？什么是注解，如何识别它的功能
+```java
+// 例如：
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+public @interface Secured {
+    String[] value(); // 和 String value();有什么区别
+}
+
+public enum ElementType {
+    TYPE,               /* 类、接口（包括注释类型）或枚举声明  */
+
+    FIELD,              /* 字段声明（包括枚举常量）  */
+
+    METHOD,             /* 方法声明  */
+
+    PARAMETER,          /* 参数声明  */
+
+    CONSTRUCTOR,        /* 构造方法声明  */
+
+    LOCAL_VARIABLE,     /* 局部变量声明  */
+
+    ANNOTATION_TYPE,    /* 注释类型声明  */
+
+    PACKAGE             /* 包声明  */
+}
+@Deprecated  -- @Deprecated 所标注内容，不再被建议使用。
+@Override    -- @Override 只能标注方法，表示该方法覆盖父类中的方法。
+@Documented  -- @Documented 所标注内容，可以出现在javadoc中。
+@Inherited   -- @Inherited只能被用来标注“Annotation类型”，它所标注的Annotation具有继承性。
+@Retention   -- @Retention只能被用来标注“Annotation类型”，而且它被用来指定Annotation的RetentionPolicy属性。
+@Target      -- @Target只能被用来标注“Annotation类型”，而且它被用来指定Annotation的ElementType属性。
+@SuppressWarnings -- @SuppressWarnings 所标注内容产生的警告，编译器会对这些警告保持静默。
+
+
+@Retention(RetentionPolicy.RUNTIME) -- 意味着，编译器会将 Inherited 的信息保留在 .class 文件中，并且能被虚拟机读取
+@interface --- 意味着,实现了 java.lang.annotation.Annotation 接口, 就是一个注解。
+@Documented -- 它的作用是说明该注解能出现在 javadoc 中。
+@Target(ElementType.ANNOTATION_TYPE) -- 它的作用是指定 Inherited 的类型是 ANNOTATION_TYPE。这就意味着，@Inherited 只能被用来标注 "Annotation 类型"
+// @Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})
+@Inherited 的含义是，它所标注的Annotation将具有继承性。
+```
+@Override 重写
+@Deprecated 拒绝
+@SuppressWarnings 阻止警告、阻止提示
+@Retention 保留、保存- 标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。
+@Documented - 标记这些注解是否包含在用户文档中。
+@Target - 标记这个注解应该是哪种 Java 成员 （g：盖）
+@Inherited - 标记这个注解是继承于哪个注解类(默认 注解并没有继承于任何子类)
+@FunctionalInterface - Java 8 开始支持，标识一个匿名函数或函数式接口。
+@SafeVarargs - Java 7 开始支持，忽略任何使用参数为泛型变量的方法或构造函数调用产生的警告。
+@Repeatable - Java 8 开始支持，标识某注解可以在同一个声明上使用多次。
+# 记住我的业务逻辑必须搞懂 ？！
+
+# 断言
+```java
+// 断言代码片段
+public LogoutConfigurer<H> addLogoutHandler(LogoutHandler logoutHandler) {
+    Assert.notNull(logoutHandler, "logoutHandler cannot be null");
+    this.logoutHandlers.add(logoutHandler);
+    return this;
+}
+```
+
+# 什么是跨站脚本伪造
+客户端与服务进行交互时，由于http协议本身是无状态协议，所以引入了cookie进行记录
+客户身份，在cookie中灰存放session_id用来识别客户身份的，在跨域的情况下，session_id
+可能被第三方恶意劫持，通过这个session_id向服务端发起请求时，服务端会认为这个请求是合法的，可能发生很多意想不到的事情。
+请求携带token匹配是否成功可以防止CSRF攻击；
+
+# SpEL（Spring Expression Language）表达式
+
+# ServerHttpRequest.Builder headers(Consumer<HttpHeaders> var1);
+参数是一个函数（函数的参数是HttpHeaders）
+```java
+Consumer<HttpHeaders> headers = (header) -> {
+    header.set("X-zhao","zhaojinying");
+    header.set("X-jin","ojinying");****
+};
+```
+# 格式化的字符串转化为对象（map结构，list结构，pojo结构）
+```java
+String claims = jwt.getClaims();
+Map map = JSON.parseObject(claims, Map.class);  // 转化为map
+ JsonUtils.jsonToList("aa",List.class);
+        JsonUtils.jsonToPojo("bb".pojo)
+
+```
+# OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
+总结如果一个对象中有你想要的值，而这个对象没有get方法时，可以全局查找他的父类甚至强制转化后，寻找对应的方法；
+
+# 动态数组参数 
+
+```java   
+antMatchers("a","b","c");
+public C antMatchers(String... antPatterns) {
+    // antPatterns转化为一个数组
+    return this.chainRequestMatchers(AbstractRequestMatcherRegistry.RequestMatchers.antMatchers(antPatterns));
+}
+```
+
+# 字符串转Long类型
+因为表单提交的ID都是string类型，二数据库的数据类型是long类型，所以在要Long.valueof(ID)，转化为long类型
+
+# responseHeader 的location
+当浏览器向服务端发送一个请求的时候，此时服务端返回的响应如果包含location头，则浏览器会进行地址重定向，具体你会看到浏览器url地址变成了重定向的地址
+如果不需要重定向，不返回locaton头就可以了
+
+# 请求接口的参数设置
+```java
+// 
+@PostMapping("/decrCount")
+public Integer decrCount(@RequestBody OrderItem orderItem){
+
+```
+
+@Column(name = "receiver_contact")
+	private String receiverContact;//收货人
+
+    @Column(name = "receiver_mobile")
+	private String receiverMobile;//收货人手机
+
+    @Column(name = "receiver_address")
+"receiverContact":"zhao",
+"receiverMobile":"15338824514",
+"receiverAddress":“啊啊啊啊”
+

@@ -1,3 +1,13 @@
+# mac配置hosts
+- vim /etc/hosts
+
+# mac配置.bash_profile环境变量
+- sudo vi  /Users/yyyyjinying/.bash_profile 
+- export JMETER_HOME=/Users/yyyyjinying/apache-jmeter-5.4.1
+- export PATH=$JAVA_HOME/bin:$PATH:.:$JMETER_HOME/bin:$PATH
+- export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JMETER_HOME/lib/ext/ApacheJMeter_core.jar:$JMETER_HOME/lib/jorphan.jar:$JMETER_HOME/lib/logkit-2.0.jar
+- cd /Users/yyyyjinying
+- source .bash_profile
 ## 常见命令
 - sudo -i // 切到root用户
 - exit // 退出root用户到普通用户

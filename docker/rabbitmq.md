@@ -14,6 +14,10 @@
 
 sudo docker exec -it c482cc76e2aa /bin/bash
 rabbitmq-plugins enable rabbitmq_management
+[
+rabbit, [{tcp_listeners, [5672]}, {loopback_users, [“asdf”]}]}
+]
+
 
 ### 在rabbitmq中安装插件
  // sftp连接远程服务器
@@ -28,6 +32,8 @@ rabbitmq-plugins enable rabbitmq_management
 - rabbitmq-plugins enable rabbitmq_delayed_message_exchange
   // 查看
 - 是否有exchange交换机中是否有x-delayed-message选项
+
+<!-- docker的NAMES:/etc/rabbitmq -->
 
 ### 添加一个新的用户
 - rabbitmqctl add_user admin admin // 创建账号 账号/密码 admin

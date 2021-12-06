@@ -46,9 +46,10 @@
   - describe emp; <!--简写：desc emp;-->
   - show create table <表名\G>; <!--加上’\G‘显示直观-->
   - drop table s_user; <!--删除表结构->
-  - delete table s_user; <!--只删除表数据-->
   - 
   ### 修改数据表
+  - DROP TABLE table_name ; <!--删除数据表-->
+  - delete from s_user；   <!-- 删除表中数据 -->
   - alter table emp1 character set utf8; <!--设置字符编码-->
   - alter table <旧表名> rename <新表名>; <!--修改表名-->
   - rename table <旧表名> to <新表名>; <!--修改表名-->
@@ -57,6 +58,10 @@
   - alter table emp1 add age1 int(10) default 12 FIRST;
   -  - alter table emp1 add age2 int(10) default 12 AFTER username;
   - alter table <表名> drop <字段名>; <!--删除表字段-->
+  <!-- 追加新的字段 -->
+  - alter table <表名> add column <字段名> varchar(30) not null comment "注解" after "字段名";
+  <!-- 在表中添加字段 -->
+  - alter table `tb_permission` add column `p_tag` varchar(30) default null COMMENT "test" AFTER `url`;
   - alter table <表名> modify <字段1> <数据类型> FIRST|AFTER <字段2>;
   - alter table <表名> engine=<更改后的存储引擎名>;
   - 删除外键```sql
@@ -76,6 +81,7 @@
     ```
 - alter table tb_emp drop FOREIGN KEY fk_emp_dept;
 - 外键约束不能跨引擎使用；
+- alter table `tb_permission` add column `p_tag` varchar(30) default null COMMENT "test" AFTER `url`;
 
 ## where和having区别
 
