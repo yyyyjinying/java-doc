@@ -2,9 +2,21 @@
 - sudo dhclient ens33
 - ifconfig -a
 
-### 开机启动
+# docker常用命令：
 - sudo docker update  --restart=always kibana
 - docker run // 创建一个新的容器并运行一个命令
+
+- docker ps // 查看所有正在运行容器
+- docker stop containerId // containerId 是容器的ID
+- docker ps -a // 查看所有容器 $ docker ps -a -q // 查看所有容器ID
+- docker stop $(docker ps -a -q) // stop停止所有容器
+- docker rm $(docker ps -a -q) // remove删除所有容器
+- docker restart 容器id //重启容器
+- docker run -d -p 8008:80 --name nginx-name nginx:1.1.1 启动一个新docker实例(nginx:1.1.1是版本号)
+
+- docker logs 容器名 // 查看日志文件-》 详细配置信息
+
+·映射共享文件· /etc/rabbitmq/rabbitmq.config
 
 ### docker默认安装目录:/var/lib/docker
 ### docker安装redis

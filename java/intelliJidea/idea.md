@@ -80,7 +80,7 @@
 - command+F : 查找
 - ctrl+H : 查看一个接口的子接口或实现类的快捷键
 - ctrl+shift+R : 可以在整个工程或着某个目录下面替换变量
-
+- command+shift+U 小写字母转大写
 
 
 

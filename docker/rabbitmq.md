@@ -21,7 +21,7 @@ rabbit, [{tcp_listeners, [5672]}, {loopback_users, [“asdf”]}]}
 
 ### 在rabbitmq中安装插件
  // sftp连接远程服务器
-- sftp -P 22 root@172.16.147.172 
+- sftp -P 22 root@172.16.147.172
 // 上传文件到远程服务器
 - put /Users/yyyyjinying/desktop/rabbitmq_delayed_message_exchange-3.9.0.ez /usr/local/tmp 
 // 远程服务器将文件cp到rabbitmq容器plugins中
