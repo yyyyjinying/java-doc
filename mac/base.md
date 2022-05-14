@@ -1,6 +1,18 @@
 # mac配置hosts
 - vim /etc/hosts
-
+172.16.147.182      redis
+172.16.147.182      rabbitmq
+172.16.147.182      solr
+172.16.147.182      zipkin
+172.16.147.182      sentinel
+172.16.147.182 mysql
+172.16.147.182 nacos
+127.0.0.1      mogu_monitor
+127.0.0.1      mogu_web
+127.0.0.1      mogu_search
+127.0.0.1      mogu_admin
+127.0.0.1      mogu_sms
+127.0.0.1      mogu_gateway
 # mac配置.bash_profile环境变量
 - sudo vi  /Users/yyyyjinying/.bash_profile 
 - export JMETER_HOME=/Users/yyyyjinying/apache-jmeter-5.4.1
@@ -50,6 +62,9 @@
 - ./redis-server redis.conf     // 开启redis服务
 - ./redis-cli shutdown  // 关闭redis服务
 - ./redis-cli    // 开启本地redis
+
+- cp -rf * ../  // * 复制所有文件
+
   
 
   

@@ -1,6 +1,7 @@
 ### 安装brew国内
 - /bin/zsh -c "$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)"
 ### cask安装mac系统的软件以及卸载
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
 - brew install --cask firefox 
 - brew uninstall firefox
 

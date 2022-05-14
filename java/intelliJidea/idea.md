@@ -54,13 +54,9 @@
 - alt+f1 :查找文件所在目录位置
 - command+/ :注释一行或着多行 //
 - ctrl+shift+/ : 注释/…/
-- command+alt+左右箭头 : 返回上次编辑的位置
-- shift+f6 :重命名
 - command+shift+上下箭头 : 把代码上移或着下移
-- command+[ 或 ] : 可以跳到大括号的开头结尾
-- command+f12 :可以显示当前文件的结构
 
-- command+shift+* :列编辑
+
 - alt+f8 : debug时选中查看值f8相当于eclipse的f6跳到下一步
 - shift+f8 :相当于eclipse的f8跳到下一个断点
 - alt+shift+f7 :这个是强制进入代码
@@ -69,20 +65,31 @@
 - command+f2 :停止运行
 
 
-- command+option+B :查找接口的实现类
-- command+N ：全局查找类
+ 
 - commond+O : 快速override重写类方法
-- command+option+L : 快速格式化
 -  shift+enter : 换到下一行
-- command+N : 查找类
-- command+shift+N : 查找文件
-- command+R : 替换
-- command+F : 查找
-- ctrl+H : 查看一个接口的子接口或实现类的快捷键
-- ctrl+shift+R : 可以在整个工程或着某个目录下面替换变量
+# 快速查看修改文件
+- shift+f6 :重命名
+- command+f12 :可以显示当前文件的结构
+- command+alt+左右箭头 : 返回上次编辑的位置
+- 选中文本，按Alt+F3 ，enter逐个往下查找相同文本，并高亮显示,esc取消高亮；
+- command+B : 找变量的来源 同F4 查找变量来源
+# 格式化
+- command+option+L 快速格式化
 - command+shift+U 小写字母转大写
 
-
+# 快捷键查找
+- command+N 按名字搜索类 
+- command+shift+N 按文件名搜索文件
+- ctrl+H 查看类的继承关系，例如HashMap的父类是AbstractMap
+- command+option+B 查找接口的实现类以及实现类的方法
+- option+F7 查找类或方法在哪被使用
+- command+F 在当前文件夹下，按照文本的内容查找
+- command+R : 替换
+- Ctrl+Shift+F 项目全局文件夹下，按照文本的内容查找
+- Ctrl+shift+R : 可以在整个工程或着某个目录下面替换变量
+- shift + shift 任意搜
+  
 
 
 

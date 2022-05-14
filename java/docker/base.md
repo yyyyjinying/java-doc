@@ -1,17 +1,123 @@
-### 如果无法获取虚拟机IP
+# 如果无法获取虚拟机IP
 - sudo dhclient ens33
 - ifconfig -a
 
+# sftp连接远程服务器
+- sftp -P 22 root@172.16.147.172
+## 上传文件到远程服务器
+- put /Users/yyyyjinying/desktop/rabbitmq_delayed_message_exchange-3.9.0.ez /usr/local/tmp 
+## 在远程服务器将文件拷贝到docker容器
+- docker cp a.html nginx-test:/data/www
+# 防火墙
+`查看防火墙是否开启`
+- firewall-cmd --list-ports
+`添加防火墙端口`
+- firewall-cmd --zone=public --add-port=8081/tcp --permanent
+- firewall-cmd --zone=public --add-port=8082/tcp --permanent
+`重启防火墙`
+- firewall-cmd --reload
+  
+# 进入容器
+- docker exec -it ……
+- ls -l
+- echo 'holle world'>>index.html
+- cat index.html
+
+# 在宿主机和容器之间交换文件
+- docker cp tomcat-8808:/usr/local/tomcat/webapps/ROOT/index.html ./
+- docker cp index.html tomcat-8808:/usr/local/tomcat/webapps/ROOT
+
+# docker 查看日志
+// -f 实时 -t 日期 --tail最有10条
+- docker logs -f -t --since='2012-12-2' --tail=10 tomcat-8808
+
+# 数据卷
+- docker volume create 数据卷名称
+- docker volume inspect 数据卷名称。// 查看数据卷
+- docker volume ls // 查看全部数据卷
+- docker volume rm 数据卷名称
+- docker run -v 数据卷名称：容器内路径 镜像id
+- docker run -v /root/docker-volume/tomcat/aa:/usr/local/tomcat/webapps/aa/ -d -p 8805:8080 --name tomcat-8805 tomcat
+- whereis nginx
+  
+# 创建文件夹  
+- mkdir -p /usr/local/nginx
+- docker run -d --name nginx-test -p 80:80 -v /usr/local/nginx/html:/usr/share/nginx/html -v /usr/local/nginx/conf/nginx.conf:/etc/nginx/conf/nginx.conf -v /usr/local/nginx/conf/conf.d/default.conf:/etc/nginx/conf/conf.d/default.conf nginx
 # docker常用命令：
 - sudo docker update  --restart=always kibana
 - docker run // 创建一个新的容器并运行一个命令
 
+# 虚悬镜像
+- docker images prune. // 先关闭后的容器，在执行；
+  
+# 自定义镜像
+```shell
+FROM tomcat
+WORKDIR /usr/local/tomcat/webapps/ROOT
+COPY mysql01.png /usr/local/tomcat/webapps/ROOT
+```
+## 构建jar镜像
+```Dockerfile
+FROM java:8
+VOLUME /tmp
+ADD springboot-thymeleaf-1.0-SNAPSHOT.jar exam.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/exam.jar"]
+```
+
+# docker-compose
+```yml
+version: "3.1"
+services:
+  spring-demo03:
+    # restart: always
+    image: spring-boot-demo1:latest
+    container_name: spring-demo03
+    ports:
+      - 8103:8080
+  spring-demo04:
+    restart: always
+    image: spring-boot-demo1:latest
+    container_name: spring-demo04
+    ports:
+      - 8104:8080
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asiz/Shanghai
+    volumes:
+      - /opt/docker_musql_tomcat/mysql/data:/var/lib/mysql
+      - /opt/docker_musql_tomcat/mysql/conf/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+```
+
+# docker-maven-plugin
+在持续集成工程中，项目工程一般使用Maven编译打包，然后生成镜像上线，能够大大提供上线效率，同时能够快速动态扩容，快速回滚，肇事很方便。docker-maven-plugin 插件就是为了帮助我们在maven工程中，通过简单的配置
+，自动生成镜像并推送到仓库中；
+# docker 客户端管理工具
+docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --name prtainer \portainer/portainer
+
+# 查看容器的镜像
+- docker inspect 容器ID
+<!-- 查看docker容器内分配的IP -->
+"IPAddress": "172.17.0.4"
+
+"Gateway": "172.17.0.1",
+"IPAddress": "172.17.0.6"
+# 查看docker的IP
+一直以为Docker是没有IP地址的，其实Docker的网络模板有点类似我们平常使用虚拟机的host-only模式，
+容器和宿主机组成一个独立的局域网，宿主机的IP为172.17.0.1,对应主机的网络名称为docker0
+所以要想看到docker容器的ip地址，只需要安装net-tools就可以了
+
+- yum install net-tools -y
+- ifconfig
+
+# docker 容器命令
+- docker stop $(docker ps -a -q)  `停掉上线的所有容器`
 - docker ps // 查看所有正在运行容器
-- docker stop containerId // containerId 是容器的ID
+- docker stop containerId // 停掉容器的ID
 - docker ps -a // 查看所有容器 $ docker ps -a -q // 查看所有容器ID
-- docker stop $(docker ps -a -q) // stop停止所有容器
 - docker rm $(docker ps -a -q) // remove删除所有容器
 - docker restart 容器id //重启容器
+- // -d 守护进程执行
 - docker run -d -p 8008:80 --name nginx-name nginx:1.1.1 启动一个新docker实例(nginx:1.1.1是版本号)
 
 - docker logs 容器名 // 查看日志文件-》 详细配置信息
@@ -21,6 +127,11 @@
 ### docker默认安装目录:/var/lib/docker
 ### docker安装redis
 - sudo docker pull redis
+
+### docker删除运行时的容器及镜像
+- docker stop 容器ID // 1
+- docker rm 容器id // 2
+- docker rmi 镜像ID // 3
   
 - ### mac中，只有在docker服务启动了之后，才可以在终端使用docker命令
 - systemctl restart docker

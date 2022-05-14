@@ -1,0 +1,20 @@
+# docker run -d --name mysql-5-3306 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:5.6
+version: "3.1"
+services:
+  mysql: # 服务名称
+    image: mysql:5.7 # 镜像名
+    container_name: mysql-5-3306 # 容器名称
+    restart: always # 开机启动项只要docker 启动就会启动
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456 # 初始密码
+    ports:
+      - 3306:3306 # 设置对外暴露端口，指定端口映射
+    volumes: # 映射数据目录到宿主机，方便修改配置
+      - ../conf/mysql_conf:/etc/mysql
+      - ../logs/mysql_logs:/var/log/mysql
+      - ../data/mysql_data:/var/lib/mysql
+    networks:
+      - mogu
+networks:
+  mogu:
+    external: true
