@@ -1,5 +1,6 @@
 ### ssh
 - ssh root@121.37.162.252 (公网ip)
+  
 ### sftp给远程服务器上传下载文件
 - sftp -P 22 root@172.16.147.168  // sftp连接121.37.162.252(远程IP)
 - sftp> get /var/www/fuyatao/index.php  /home/fuyatao/  // 下载文件

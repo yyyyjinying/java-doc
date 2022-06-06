@@ -1,6 +1,7 @@
 # 如果无法获取虚拟机IP
 - sudo dhclient ens33
 - ifconfig -a
+- ifconfig ens33
 
 # sftp连接远程服务器
 - sftp -P 22 root@172.16.147.172

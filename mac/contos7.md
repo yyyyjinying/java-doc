@@ -1,5 +1,27 @@
 ### 查看ip
-- ip adder  // en33
+- vi /etc/sysconfig/network-scripts/ifcfg-ens33
+```js
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens33
+UUID=b67047c1-4b91-4857-a933-11405005d60c
+DEVICE=ens33
+ONBOOT=yes
+```
+- systemctl restart network.service
+- ping 192.168.1.5 // 看是否能拼通
+- 如果能拼通查询ens33
+- ifconfig ens33
+- ip addr show dev ens33
 ### 开启服务
 - sudo systemctl start docker
 
