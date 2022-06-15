@@ -1,0 +1,6 @@
+- https://unpkg.com/react@16/umd/react.production.min.js
+- https://unpkg.com/react@18/umd/react.production.min.js
+- https://unpkg.com/react-dom@16/umd/react-dom.production.min.js
+- https://unpkg.zhimg.com/jquery@3.6.0/dist/jquery.js
+- https://unpkg.zhimg.com/react@18/umd/react.development.min.js
+- https://unpkg.zhimg.com/react-dom@18/umd/react-dom.development.min.js

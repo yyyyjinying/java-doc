@@ -32,6 +32,32 @@ Object.is() 与 === 也不相同。差别是它们对待有符号的零和 NaN �
 - esm 是编译时加载，也就是只有所有import的模块都加载完成，才会开始执行；
 - 同一个模块如果加载多次，只会执行一次。
 - 相关详细讲解 https://segmentfault.com/a/1190000041789653
+- import.meta 获取引入模块的信息
+- - new URL(import.meta.url).searchParams.get('someURLInfo'); // 5
+```js
+  const moduleGlobEager = () => {
+    const modules = import.meta.globEager('./dir/*.ts');
+    console.log('q', modules);
+  };
+
+  const moduleGlob = () => {
+    const modules = import.meta.glob('./dir/*.ts');
+    console.log('m', modules);
+    for (const path in modules) {
+      if (path.endsWith('b.ts')) {
+        modules[path]().then((mod) => {
+          console.log(path, mod.default);
+        });
+      }
+      if (path.endsWith('a.ts')) {
+        modules[path]().then((mod) => {
+          const { aName } = mod;
+          console.log(path, aName);
+        });
+      }
+    }
+  };
+```
 ### 静态导入和动态导入
 - 静态导入会显着减慢代码的加载速度，并且您需要正在导入的代码的可能性很小，或者直到以后才需要它。
 - 静态导入会显着增加程序的内存使用量，并且您需要导入的代码的可能性很小。
