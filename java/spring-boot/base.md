@@ -66,4 +66,18 @@ env.getProperty("person.name");
   注意：
   1.测试类如果存在于引导类所在包或子包中无需指定引导类；
   2.测试类如果不在引导类所在的包或者子包中需要通过classs属性指定引导类；
+```java
+@SpringBootTest(classes=ZhaoApplication.class)
+class ZhaoApplicationTests {
 
+    @Autowired
+    BookDao bookDao;
+
+    @Test
+    void contextLoads() {
+        bookDao.see();
+    }
+
+}
+
+```
