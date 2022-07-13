@@ -89,6 +89,11 @@
 - Ctrl+Shift+F 项目全局文件夹下，按照文本的内容查找
 - Ctrl+shift+R : 可以在整个工程或着某个目录下面替换变量
 - shift + shift 任意搜
+- shift+f6 :重命名
+- command+F12 :可以显示当前文件的结构
+- command+alt+左右箭头 : 返回上次编辑的位置
+- 选中文本，按Alt+F3 ，enter逐个往下查找相同文本，并高亮显示,esc取消高亮；
+- command+B : 找变量的来源 同F4 查找变量来源
   
 
 

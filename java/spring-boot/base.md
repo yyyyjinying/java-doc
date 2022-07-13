@@ -81,3 +81,26 @@ class ZhaoApplicationTests {
 }
 
 ```
+# druid
+# lombok
+# mybatis-plus
+- 分页如何使用；
+- 查询条件如何使用；
+```yml
+## 配置mybatis-plus的表前缀和字段转换，mp的日志打印等；
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/aaa
+      username: root
+      password: 123456
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: t_
+  configuration:
+    map-underscore-to-camel-case: false # 数据库中的字段驼峰法命名和实体类中的驼峰法命名相冲突
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+```
