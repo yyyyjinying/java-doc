@@ -11,3 +11,14 @@
 /usr/lib：理解为C:/Windows/System32。
 /usr/local：用户级的程序目录，可以理解为C:/Progrem Files/。用户自己编译的软件默认会安装到这个目录下。
  这里主要存放那些手动安装的软件，即不是通过“新立得”或apt-get安装的软件。它和/usr目录具有相类似的目录结构。让软件包管理器来管理/usr目录，而把自定义的脚本(scripts)放到/usr/local目录下面。
+
+
+ # java如何查找杀死指定的进程既占用的端口
+# spring-boot-maven-plugin插件的使用
+mysql -u root -p
+# 上线时临时属性设置
+带属性启动springBoot
+- java -jar aa.jar --server.port=8080
+- 多个属性用空格隔开，必须是application.yml中支持的属性；
+# 启动属性的配置
+- Arrays.toString(args)

@@ -13,6 +13,9 @@
 127.0.0.1      mogu_admin
 127.0.0.1      mogu_sms
 127.0.0.1      mogu_gateway
+# Mac系统上查看端口占用和释放端口
+- sudo lsof -i tcp:8080
+- sudo kill -9 PID
 # mac配置.bash_profile环境变量
 - sudo vi  /Users/yyyyjinying/.bash_profile 
 - export JMETER_HOME=/Users/yyyyjinying/apache-jmeter-5.4.1

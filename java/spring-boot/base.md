@@ -104,3 +104,46 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 ```
+
+# spring-boot的yml多环境的配置文件的优先级
+- 最高， 整个项目的config文件夹下
+- 第二， 整个的项目的根路径下
+- 第三， resource的文件下的config文件夹
+- 第四， resource文件下
+# 多环境配置
+```xml
+<!--多环境配置-->
+    <profiles>
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>dev</id>
+            <properties>
+                <profileActive>dev</profileActive>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profileActive>test</profileActive>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profileActive>prod</profileActive>
+            </properties>
+            <!-- 默认开启这个配置 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+```
+![application.yml]("./imgs/2.png")
+```yml
+spring:
+  profiles:
+    active: @profileActive@
+```
+
+
