@@ -14,6 +14,7 @@ npm resource manager
 - nrm use npm
 - npm login
 - npm publish
+- npm config set registry "http://^^^"
   
 ## n 安装和切换node版本
 - sudo npm i -g n

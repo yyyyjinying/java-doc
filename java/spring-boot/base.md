@@ -146,4 +146,13 @@ spring:
     active: @profileActive@
 ```
 
+# 宽松绑定
+- @configurationProperties支持属性名宽松绑定
+- 驼峰模式、下划线模式、中划线模式、常量模式。
+  
+# 常用计量单位
+- @DurationUnit(ChronoUnit.MINUTES)
+- @DataSizeUnit(DataUnit.MEGABYTES)
+- 
+
 

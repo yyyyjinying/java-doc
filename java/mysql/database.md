@@ -83,6 +83,11 @@
 - 外键约束不能跨引擎使用；
 - alter table `tb_permission` add column `p_tag` varchar(30) default null COMMENT "test" AFTER `url`;
 
+# join left join,right join, full join
+join等价于inner join内连接抄，是返回两个表中都有的符合条件的行。
+left join左连接，是返回左袭表知中所有的行及右表中符合条件的行。
+right join右连接，是返回右表中所有的行及左表中符合条件的行。
+full join全连接，是返回左表中所有的行及右表中所有的行，并按条件连接.
 ## where和having区别
 
 - where和having都是为了完成数据的过滤，它们后面都是添加条件；
@@ -110,12 +115,44 @@
 以上语句的执行顺序：
 
 - from 将硬盘上的表文件加载到内存
+- on
+- join
 - where:将符合条件的数据筛选出来。生成一张新的临时表
 - group by :根据列中的数据种类，将当前临时表划分成若干个新的临时表
 - having : 可以过滤掉group by生成的不符合条件的临时表
 - select : 对当前临时表进行整列读取
 - order by : 对select生成的临时表，进行重新排序，生成新的临时表
 - limit : 对最终生成的临时表的数据行，进行截取
+MySQL中语句的执行顺序
+
+SQL语句执行顺序
+```sql
+from
+
+on <on_condition>
+
+<join_type> join <join_table>
+
+where <where_condition>
+
+group by <group_by_list>
+
+<sum()、avg()等聚合函数>
+
+having <having_condition>
+
+select <select_list>
+
+distinct
+
+order by <order_by_condition>
+
+over()  # 窗口函数
+
+limit <limit_number>
+
+```
+
 
 ## 子查询
 定义：select 语句嵌套 select 语句被称为子查询；

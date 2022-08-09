@@ -15,7 +15,12 @@
 - YEAR 年
 - DATETIME 年月日时分秒
 - TIMESTAMP 时间戳
-  
+序号	名称	描述	定义方式	格式	范围
+1	date	日期	date	YYYY-MM-DD	'1000-01-01' to '9999-12-31'
+2	time	时间	time[.fraction]	hh:mm:ss[.000000]	'-838:59:59.000000' to '838:59:59.000000'
+3	datetime	日期+时间	datetime[.fraction]	YYYY-MM-DD hh:mm:ss[.000000]	'1000-01-01 00:00:00' to '9999-12-31 23:59:59'
+4	timestamp	时间戳	timestamp[.fraction]	YYYY-MM-DD hh:mm:ss[.000000]	'1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07' UTC
+5	year	年	year	YYYY	'1901' to '2155'
 
 ## 字符串类型
 - CHAR 固定字符
@@ -28,6 +33,7 @@
 - LONGBLOB  二进制极大
 - LONGTEXT  极大文本
   
+反引号：它是为了区分MYSQL的保留字与普通字符而引入的符号。
 
 # 锁
 锁是在执行多线程时用于强行限定资源访问的同步机制，数据库锁根据锁的粒度可分为行级锁，表级锁和页级锁

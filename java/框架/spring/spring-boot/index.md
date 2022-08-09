@@ -17,3 +17,6 @@ WXPayUtil.xmlToMap(content);
 
 # JSONObject
 JSONObject.parseObject(content, Map.class);
+
+# 内置持久化解决方案
+- jdbcTemplate
