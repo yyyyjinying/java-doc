@@ -22,3 +22,23 @@ mysql -u root -p
 - 多个属性用空格隔开，必须是application.yml中支持的属性；
 # 启动属性的配置
 - Arrays.toString(args)
+
+# 没有ifconfig时，需要安装net-tools
+- yum install net-tools -y
+-  vi /etc/sysconfig/network-scripts/ifcfg-ens33，将最后一行的ONBOOT=no，改为ONBOOT=yes
+-  ifconfig ens33   // 查看ifconfig是否生效
+
+# at命令
+- sudo systemctl enable --now atd
+
+<!-- 利用通道，我想从现在开始一分钟后向 at-test.txt 文件写入 hello again  -->
+- echo "echo 'hello again' >> /root/at-test.txt" | at now +1 minute
+- echo "java -jar /root/publisher/demo*.jar" | at now
+- echo "java -jar /root/publisher/demo*.jar" | at now +1 minute
+<!-- 查看at命令队列时设置了多少个任务 -->
+- atq
+
+<!-- 从队列中删除任务，请使用 atrm 命令和任务编号 -->
+- atrm 7
+
+问题原因：shell脚本运行时会产生进程，而jenkins默认会自动终止产生进程！

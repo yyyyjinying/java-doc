@@ -22,6 +22,15 @@ ONBOOT=yes
 - 如果能拼通查询ens33
 - ifconfig ens33
 - ip addr show dev ens33
+
+# 防火墙
+`查看防火墙是否开启`
+- firewall-cmd --list-ports
+`添加防火墙端口`
+- firewall-cmd --zone=public --add-port=8081/tcp --permanent
+- firewall-cmd --zone=public --add-port=8082/tcp --permanent
+`重启防火墙`
+- firewall-cmd --reload
 ### 开启服务
 - sudo systemctl start docker
 
