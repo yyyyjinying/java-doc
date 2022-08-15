@@ -77,6 +77,7 @@
 # 查看容器日志
 - -t 参数显示时间
 - docker logs 130857a0e128 -t
+- docker logs -f 130857a0e128
 
 # 暂停/开始
 - docker pause 130857a0e128
@@ -122,3 +123,17 @@
   
 # 重置
 - docker update 
+
+# 数据卷
+## 快速在本地创建一个数据卷
+- docker volume create -d local test1
+- ls /var/lib/docker/volumes/
+- - test1
+
+## 数据卷容器
+- docker run -it -v /dbdata --name dbdata tu:0.1
+- - docker run -it --volumes-from --name db1 tu:0.1
+- - docker run -it --volumes-from --name db2 tu:0.1
+
+- docker run -d -P --name web --link db:db training/webapp python app.py
+- - link name:alias
