@@ -1,0 +1,6 @@
+FROM alpine
+# WORKDIR指令设置工作目录,为避免在未知目录中进行意外操作
+WORKDIR /app
+COPY src/ /app
+RUN echo 123 >> a.txt
+CMD tail -f a.txt

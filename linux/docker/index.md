@@ -1,3 +1,5 @@
+# 中文参考手册
+- https://docker_practice.gitee.io/zh-cn
 # docker 安装docker
 ## 安装存储库
 - sudo yum install -y yum-utils
@@ -101,6 +103,8 @@
 
 # 删除运行中的容器
 - docker rm -f 3c66c696cb8a
+- 强制删除所有的容器
+- docker rm -f $(docker ps -aq)
 
 # 导出容器
 - docker export -o test_tu.tar ce5
@@ -131,9 +135,18 @@
 - - test1
 
 ## 数据卷容器
+- docker volume ls
+- docker volumn // 自动打开help
+- docker volume create web-vol
+- docker volume inspect web-vol
+- ls /var/lib/docker/volumes/web-vol/_data  // 默认数据卷的存放位置
+- 可以默认创建数据卷 web-vol1
+- docker volume prune 删除无用的数据卷
+- docker run -d -p 8086:80 --name web1 -v web-vol1:/usr/share/nginx/html nginx
 - docker run -it -v /dbdata --name dbdata tu:0.1
 - - docker run -it --volumes-from --name db1 tu:0.1
 - - docker run -it --volumes-from --name db2 tu:0.1
+- docker run参数-v的rw、ro详解
 
 - docker run -d -P --name web --link db:db training/webapp python app.py
 - - link name:alias
