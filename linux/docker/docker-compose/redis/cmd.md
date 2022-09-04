@@ -27,5 +27,23 @@ bind 0.0.0.0
 #修改peotected-mode yes为no 或者注视掉
 #peotected-mode yes
 ```
+- docker exec -it 40fcabf31ca4 bash
+- /data# redis-cli
+- keys *
 重启启动容器服务
 - docker restart redis
+
+# 数据库类型
+redis是内存型数据库，可以持久化到硬盘中，支持数据类型（string，list,set,Zset,hash）
+单线程，单进程，异步处理，线程安全的；
+分布式锁
+单个虚拟机使用java多线程的Synchronized
+多个虚拟机的 redis
+
+# redis启动
+- 默认在redis-server方式启动，默认配置
+- 
+内存 - 读写快
+硬盘 - 数据持久化
+
+

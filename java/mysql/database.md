@@ -185,7 +185,24 @@ http://www.monkey1024.com/database/841
 http://www.monkey1024.com/database/844
 
 
+```sql
+CREATE TABLE `test` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `task_id` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '任务id',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 
+
+CREATE TABLE `t_user`(
+	`id` INT(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+	`name` varchar(25) NOT NULL COMMENT '名称',
+	-- `date` datetime NOT NULL COMMENT '创建时间',
+	PRIMARY key (id)
+)ENGINE=InnoDB;
+
+```
 
 
 

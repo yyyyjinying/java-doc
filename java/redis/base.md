@@ -139,6 +139,9 @@ key1列表右边吐出一个值，从key2列表的左边插入值；
 ## scard
 - scard k3
 集合元素的数量
+## move
+- move c1 1
+  move key db
 
 ## smove 
 - smove k4 k5 v1
@@ -198,5 +201,13 @@ k1的差集
 ## hlen 
 - hlen k1 // 哈希集中字段的数量
 
+## rename
+- rename key newkey
+
+## type 
+- type key
+
 redis的五大数据结构讲解
+
+
 

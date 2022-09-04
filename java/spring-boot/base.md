@@ -143,7 +143,7 @@ mybatis-plus:
 ```yml
 spring:
   profiles:
-    active: @profileActive@
+    active: @profileActive@ # 如果报异常是maven依赖错误，需要重新执行package
 ```
 
 # 宽松绑定
