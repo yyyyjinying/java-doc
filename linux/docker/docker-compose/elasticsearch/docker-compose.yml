@@ -1,0 +1,30 @@
+version: "3"
+networks:
+  zjynet:
+volumes:
+  config:
+  data:
+  plugins:
+services:
+  elasticsearch:
+    image: elasticsearch:7.14.0
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - config:/usr/share/elasticsearch/config
+      - data:/usr/share/elasticsearch/data
+      - plugins:/usr/share/elasticsearch/plugins
+    networks:
+      - "zjynet"
+  kibana:
+    image: kibana:7.14.0
+    ports:
+      - 5601:5601
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - "zjynet"
