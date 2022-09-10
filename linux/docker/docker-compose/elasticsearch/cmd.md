@@ -15,3 +15,8 @@
 - mkdir -p /root/sorf/elasticsearch/kibana
 - cd /root/sorf/elasticsearch/kibana
 - docker cp kibana:/usr/share/kibana/config ./
+
+# docker-compose.yml文件启动
+- es的启动有点慢，需要耐心等待
+
+

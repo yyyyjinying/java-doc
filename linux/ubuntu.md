@@ -49,3 +49,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted unive
 - sshd [参数]
 - -D:以非后台守护进程的方式运行服务器
 - -p:设置使用的端口号
+# Ubuntu管理防火墙
+- sudo ufw status
+- sudo ufw allow 5000
+- sudo ufw reload

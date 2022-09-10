@@ -150,3 +150,12 @@
 
 - docker run -d -P --name web --link db:db training/webapp python app.py
 - - link name:alias
+# sftp连接远程服务器
+- sftp root@172.16.147.172
+## 上传文件到远程服务器
+- put /Users/yyyyjinying/desktop/rabbitmq_delayed_message_exchange-3.9.0.ez /usr/local/tmp 
+## 在远程服务器将文件拷贝到docker容器
+- docker cp a.html nginx-test:/data/www
+# 在宿主机和容器之间交换文件
+- docker cp tomcat-8808:/usr/local/tomcat/webapps/ROOT/index.html ./
+- docker cp index.html tomcat-8808:/usr/local/tomcat/webapps/ROOT
