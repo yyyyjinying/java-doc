@@ -15,6 +15,23 @@
 - 嵌套对象映射
 - 嵌套对象查询
 - 嵌套字段排序
+
+# 查询
+## 查询领域特定语言（query domain-specific language） 或者 Query DSL 来写查询语句。
+## 如何选择查询与过滤
+通常的规则是，使用查询（query）语句来进行 全文 搜索或者其它任何需要影响 相关性得分 的搜索。除此以外的情况都使用过滤（filters)。
+对于精确值的查询使用filter语句来取代query，因为filter将会被缓存;
+
+# 查询
+- range 范围查询
+- match 标准查询（分析）
+- multi_match 多个字段上执行相同的 match 查询
+- term 精确值查询（不分析）（数字、时间、布尔、not_analyzed 的字符串）
+- terms 查询多个条件
+- exits查询 NOT IS_NULL
+- missing查询 IS_NULL
+
+
 # 在elasticsearch的plugins中添加ik分词器
 - ik_max_word 细粒度的拆分
 - ik_smart 最粗力度的拆分
