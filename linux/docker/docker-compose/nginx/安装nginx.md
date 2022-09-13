@@ -1,4 +1,5 @@
 # 前端打包
+- yum install -y unzip zip
 - zip -q -r dist.zip ./dist
 <!-- - cd dist && zip -q -r dist.zip * -->
 - stfp root@127.16.147.192
