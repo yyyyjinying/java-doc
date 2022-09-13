@@ -1,5 +1,20 @@
 # https://www.elastic.co/guide/cn/elasticsearch/guide/current/empty-search.html
 
+# 中文文档
+- https://www.elastic.co/guide/cn/elasticsearch/guide/current/mapping-intro.html
+## 映射
+索引中每个文档都有类型 。每种类型都有映射（模式定义）。映射中定义了类型中每个域的数据类型，以及与类型有关的元数据。
+字符串类型的域，type，index，anylazed ，可以设置index：指定分析器全文检索的方式，关键字，no不进行搜索；
+
+## 复杂核心域类型
+- [],null,[null]是空的，它们将不会被索引
+### 内部对象以及内部对象数组是如何索引的
+- 把内部对象转化成一组键值对列表组成的列表，可以有效地索引内部类；
+### 嵌套对象
+- type: nested
+- 嵌套对象映射
+- 嵌套对象查询
+- 嵌套字段排序
 # 在elasticsearch的plugins中添加ik分词器
 - ik_max_word 细粒度的拆分
 - ik_smart 最粗力度的拆分

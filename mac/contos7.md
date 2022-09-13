@@ -31,12 +31,3 @@ ONBOOT=yes
 - firewall-cmd --zone=public --add-port=8082/tcp --permanent
 `重启防火墙`
 - firewall-cmd --reload
-### 开启服务
-- sudo systemctl start docker
-
-### 开机自动启动
-- sudo systemctl enable docker // 开机启动docker
-- sudo docker update  --restart=always rabbit // docker启动开启rabbit
-
-### docker 命令
-- docker run // 创建一个新的容器并运行一个命令

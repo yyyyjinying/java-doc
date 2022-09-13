@@ -14,7 +14,13 @@
 ## 启动docker
 - sudo systemctl start docker
 ## 是否成功
-- sudo docker run hello-world    
+- sudo docker run hello-world   
+### 开启服务
+- sudo systemctl start docker
+### 开机自动启动
+- sudo systemctl enable docker // 开机启动docker
+- sudo docker update  --restart=always rabbit // docker启动开启rabbit
+
 
 # 镜像的相关内容
 - 拉去远程仓库的镜像
@@ -148,8 +154,14 @@
 - - docker run -it --volumes-from --name db2 tu:0.1
 - docker run参数-v的rw、ro详解
 
+- docker volume create 数据卷名称
+- docker volume inspect 数据卷名称。// 查看数据卷
+- docker volume ls // 查看全部数据卷
+- docker volume rm 数据卷名称
 - docker run -d -P --name web --link db:db training/webapp python app.py
 - - link name:alias
+
+
 # sftp连接远程服务器
 - sftp root@172.16.147.172
 ## 上传文件到远程服务器

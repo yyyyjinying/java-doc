@@ -1,3 +1,7 @@
+
+
+
+
 # Sql的分类
 
 | 分类 | 全称                       | 说明                                                       | 查询语句 |
@@ -55,7 +59,8 @@ create table `emp`(
   idcard char(18) comment "身份证号",
   entrydate date comment "入职日期"
 ) comment "员工表";
-
+# 添加一条数据
+insert into employee(workno,gender,age,idcard,entrydate) values("赵晋英","男",12,"142201199203073818","2012-09-09");
 # 修改表结构
 #添加字段
 alter table emp add nickname varchar(20) comment "昵称";
@@ -67,7 +72,7 @@ alter table emp change nickname username varchar(30) comment "用户名称";
 alter table emp drop username;
 # 修改表名
 alter table emp rename to `employee`;
-# 删除表,并重新创建表 
+# 删除表,并重新创建表 只删除数据
 truncate table employee;
 # 删除表
 drop table if exists employee;
@@ -97,4 +102,105 @@ create table `tb_user`(
   `status` char(1) default "1" comment "状态",
   gender char(1) comment "性别"
 ) comment "用户表";
+
+# 添加外键
+alter table emp add constraint fk_emp_dept_id foreign key (dept_id) references dept(id);
+
+# 删除外键
+alter table emp drop foreign key fk_emp_dept_id;
 ```
+
+
+
+# 外键约束
+
+- 删除/更新行为
+
+| 行为      | 说明                                                         |
+| --------- | ------------------------------------------------------------ |
+| NO ACTION | 检查是否有对应的外键，如果有就不允许删除和修改               |
+| RESTRICT  | 与NO ACTION行为一致                                          |
+| CASCADE   | 检查是否有对应的外键，如果有就同时删除子表中相关外键的记录   |
+| SET NULL  | 检查是否有对应的外键，如果有就将相关子表的外键字段值设置为NULL |
+
+```sql
+# 添加外键 cascade约束
+alter table emp add constraint fk_emp_dept_id foreign key (dept_id) references dept(id) on update cascade on delete cascade;
+
+# 添加外键 set null 约束
+alter table emp add constraint fk_em_dept_id foreign key (dept_id) references dept(id) on update set null on delete set null;
+```
+
+
+
+# 事务
+
+事务是一组操作的集合，不可分割的工作单位，事务会把所有的工作作为一个整体一起向系统提交和撤销操作请求，这些操作要么同时失败，同时成功。
+
+```msql
+# 创建一张表
+create table `account`(
+	id int primary key auto_increment comment "主键ID",
+	name varchar(10) comment "姓名",
+	money int comment "余额"
+) comment "账户表";
+
+insert into account(name,money) values("张三",2000),("李四", 2000);
+select * from `account`;
+
+# 查看事务
+select @@autocommit;
+
+# 设置事务为手动提交 （0:手动；1:自动）
+set @@autocommit=0;
+
+select * from `account` where name="张三";
+
+# 开启事务
+start transaction;
+
+update `account` set money=money-1000 where name="张三"; 
+异常
+update `account` set money=money+1000 where name="李四";
+
+# 提交事务
+commit;
+
+# 回滚事务
+rollback;
+
+
+# 查看事务的隔离级别
+select @@transaction_isolation;
+
+
+
+```
+
+
+
+
+
+# 存储过程
+
+```sql
+# 创建存储过程
+create procedure p3()
+begin
+	declare score int default 1;
+	declare result varchar(10);
+	
+	if score >= 85 then
+		set result := '优秀';
+	elseif score >= 60 then
+		set result := '及格';
+	else
+		set result := '差';
+	end if;
+	select result;
+end;
+
+call p3;
+
+```
+
