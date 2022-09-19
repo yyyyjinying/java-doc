@@ -57,6 +57,15 @@
 - 即尽量返回较少的无关文档
 查全率
 - 则尽量返回较多的相关文档
+
+# 使用语言分析器（ik）
+- 配置语言分析器，
+- index-pre-language 
+- field-pre-language
+- - 主域和子预
+
+
+每个子域提供不同的语言分析器来对 title 域文本进行分析。
 # 在elasticsearch的plugins中添加ik分词器
 - ik_max_word 细粒度的拆分
 - ik_smart 最粗力度的拆分
