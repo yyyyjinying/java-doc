@@ -34,6 +34,7 @@ build/
 
 ### VS Code ###
 .vscode/
+node_module/
 
 gitignore/*
 

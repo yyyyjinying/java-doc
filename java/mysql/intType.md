@@ -22,6 +22,11 @@
 4	timestamp	时间戳	timestamp[.fraction]	YYYY-MM-DD hh:mm:ss[.000000]	'1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07' UTC
 5	year	年	year	YYYY	'1901' to '2155'
 
+java
+date -》 java.sql.Date YYYY-MM-DD
+datetime -》 java.util.Date 包含日期时间
+java.util.Time 包含时间
+java.util.Timestamp 包含日期和62616964757a686964616fe58685e5aeb931333361323031时间
 ## 字符串类型
 - CHAR 固定字符
 - VARCHAR 可变字符

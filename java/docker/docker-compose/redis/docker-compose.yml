@@ -1,0 +1,13 @@
+version: "2"
+volumes:
+  redisData:
+services:
+  redis:
+    image: redis:7.0.4
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - /Users/yyyyjinying/sortware/redis/conf:/usr/local/etc/redis
+      - redisData:/data
+    command: redis-server /usr/local/etc/redis/redis.conf

@@ -1,3 +1,10 @@
+# 解压缩
+- tar -xzvf /Users/yyyyjinying/Downloads/logstash-8.6.1-darwin-x86_64.tar.gz ./解压到目标地址
+- cd bin 下为执行指令
+
+# cp
+cp -rf aaa ./bbb.  //深拷贝文件夹
+
 # 查看文件
 - ls -l     // 查看文件以及详细权限信息
 - ls -a -l  // 查看包括隐藏文件的详细权限信息
@@ -52,6 +59,7 @@
 - 更改文件属主，也可以同时更改文件属组  R表示递归
   - chown [–R] 属主名 文件名
   - chown [-R] 属主名：属组名 文件名
+- sudo chmod -R 777 文件夹名
 
 
 ### 重启Linux

@@ -1,0 +1,33 @@
+version: '3'
+  services:
+    namesrv:
+      image: foxiswho/rocketmq:4.8.0
+      container_name: rmqnamesrver
+      ports:
+        - "9876:9876"
+      environment:
+        JAVA_OPT_EXT: "-Xms512M -Xmx512M -Xmn128m"
+      command: sh mqnamesrv
+    broker:
+      image: foxiswho/rocketmq:4.8.0
+      container_name: rmqbroker
+      ports:
+        - "10911:10911"
+      environment:
+        NAMESERV_ADDR: "127.0.0.1:9876"
+        JAVA_OPT_EXT: "-Xms512M -Xmx512M -Xmn128m"
+      volumes:
+        - D:\DockerData\data\rocketmq\logs:/home/rocketmq/logs
+        - D:\DockerData\data\rocketmq\store:/home/rocketmq/store
+      command: sh mqbroker -n namesrv:9876 -c /home/rocketmq/rocketmq-4.8.0/conf/broker.conf
+      depends_on:
+        - namesrv
+    mqconsole:
+      image: styletang/rocketmq-console-ng
+      container_name: rmqconsole
+      ports:
+        - "10100:8080"
+      environment:
+        JAVA_OPTS: -Drocketmq.config.namesrvAddr=namesrv:9876 -Drocketmq.config.isVIPChannel=false
+      depends_on:
+        - namesrv

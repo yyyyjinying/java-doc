@@ -35,6 +35,8 @@
 - redis-cli shutdown
 - sudo pkill redis-server
 
+- brew install logstash
+
 
     
 

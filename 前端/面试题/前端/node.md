@@ -21,7 +21,7 @@ nginx采用C编写
 
 
 # 事件循环
-Loash.为了解决javascript单线程阻塞的问题，引入了事件循环；
+为了解决javascript单线程阻塞的问题，引入了事件循环；
 在进程启动时，会创建一个类似于while（true）的循环，每执行一次循环体的过程称为tick，
 在tick中，每个事件循环中有一个或多个观察者，向这些观察者询问是否有要处理的事件；
 如果有，就取出事件及其相关的回调函数，执行他们；然后进入下一个循环，如果不再有事件
@@ -129,6 +129,7 @@ Web Storage分为两种，即sessionStorage（页面会话期间可用）和loca
 
 ### 移动端的rem.js配置
 1.根据设计稿的px,自动计算html-size 的大小；
+html-size =（视口/设计稿的宽px）* 100
 ```js
 window.onload = function() {
   /*720代表设计师给的设计稿的宽度，你的设计稿是多少，就写多少;100代表换算比例，这里写100是
@@ -239,8 +240,8 @@ watcher负责向观察者列表里添加（订阅）对应的更新函数，Dep�
 vue中的模板template无法被浏览器解析并渲染，需要模板编译，
 分三个阶段，解析parse，优化optimize，生成generate，最终生成可执行函数render。
 parse阶段：解析器（parser）的作用是将 模板字符串 转换成抽象语法树AST。
-optimize阶段：遍历抽象语法树AST，找到其中的一些静态节点并进行标记，方便在页面重渲染的时候进行diff比较时，直接跳过这一些静态节点，优化runtime的性能。
-generate阶段：将最终的抽象语法树AST转化为完整的renader函数代码。
+optimize阶段：遍历抽象语法树AST，找到其中的一些静态节点并进行标记，方便在页面重渲染的时候进行diff比较时，`直接跳过这一些静态节点，优化runtime的性能`。
+generate阶段：将最终的`抽象语法树AST`转化为完整的renader函数代码。
 
 
 # 虚拟daom
