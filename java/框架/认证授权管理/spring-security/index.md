@@ -109,3 +109,16 @@ CORS需要浏览器和服务器同时支持。目前，所有浏览器都支持�
 
 
 方法安全性是通过使用MethodSecurityInterceptor来加强的
+
+
+# Aouth2.0
+授权码模式
+先去认证服务器获取授权码，拿着授权码再去认证服务器获取登录令牌token
+简化授权模式
+密码模式
+客户端模式
+
+Authorize Endpoint 授权端点
+token Endpoint token令牌端点
+introspection Endpoint 校验端点
+revocation Endpoint 撤销端点
