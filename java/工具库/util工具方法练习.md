@@ -59,3 +59,8 @@ electronicFenceList.stream()
             Map<String,Object> mm = JSONObject.parseObject(s1, new TypeReference<Map<String, Object>>(){});
             log.info("----{}", mm.get("a"));
         }
+21. ToolUtils.isAllNotEmpty(session, message)
+22. SpringUtil.getBean(beanId, BaseHandler.class)
+23. oCardCallBackVOS.stream().map(AlarmLogDTO::getCardId).distinct().collect(Collectors.toList())
+24. userDataVOS.stream().collect(Collectors.toMap(UserDataVO::getCardId, Function.identity(), (key1, key2) -> key2, HashMap::new))
+25. BeanUtils.copyProperties(userMap, user);

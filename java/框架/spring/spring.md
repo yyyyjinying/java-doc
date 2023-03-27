@@ -179,6 +179,24 @@ Annotation-based Container Configuration
  - setter方法
  - 任意名称和参数的方法
  - 字段
+```java
+@Bean
+public TokenStore redisTokenStore(){
+    return new RedisTokenStore(redisConnectionFactory);
+}
+
+@Bean
+@Primary
+public TokenStore jwtTokenStore(){
+    return new JwtTokenStore(jwtAccessTokenConverter());
+}
+
+// 通过类型注入，如果有多个bean,必须有一个约定为Primary，如果你想用其中一个，可以使用@Qualifier("jwtTokenStore")
+
+@Autowired
+@Qualifier("jwtTokenStore")
+private TokenStore tokenStore;
+```
 
 默认行为是将带注释的方法和字段视为所需依赖项的方法和字段；
 @Autowired(required = false)

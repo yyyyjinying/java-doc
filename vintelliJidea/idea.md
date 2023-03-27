@@ -17,7 +17,8 @@
         </plugins>
     </build>
 ```
-# 在pom文件下
+# 引入sources资源文件
+- 在pom文件下
 在父工程下执行，子工程不行；
 执行terminal
 - mvn dependency:sources -DdownloadSources=true -DdownloadJavadocs=true

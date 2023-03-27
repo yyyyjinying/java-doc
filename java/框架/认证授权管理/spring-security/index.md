@@ -122,3 +122,128 @@ Authorize Endpoint 授权端点
 token Endpoint token令牌端点
 introspection Endpoint 校验端点
 revocation Endpoint 撤销端点
+
+# WebSecurityConfigurer
+实例提供了一个方便的基类，允许通过覆盖方法进行自定义；
+
+
+# AuthorizationServerConfigurerAdapter
+授权服务器，认证服务器
+void configure(AuthorizationServerSecurityConfigurer security)
+配置授权服务器的安全性
+
+void configure(ClientDetailsServiceConfigurer clients)
+声明单个客户端及其属性
+
+void configure(AuthorizationServerEndpointsConfigurer endpoints) 
+配置授权服务器端点的非安全特性，如令牌存储、令牌自定义、用户批准和授权类型
+
+# ResourceServerConfigurer
+资源服务器
+配置类中开启@EnableResourceServer
+功能调整访问权限；
+配置OAuth2安全保护的规则和路径；
+多个配置相同的属性，后者覆盖；
+
+void configure(ResourceServerSecurityConfigurer resources) 
+添加资源服务器特定的属性(如资源id)。默认值应该适用于许多应用程序，但是你可能至少需要改变资源id。
+
+void configure(HttpSecurity http) 
+配置安全资源的访问规则。默认所有资源受限
+
+
+
+![](/Users/yyyyjinying/demo-file/git/java-doc/java/框架/认证授权管理/spring-security/imgs/image-20230324132032825.png)
+
+![image-20230324133407915](../../../../../../../md-imgs-file/image-20230324133407915.png)
+
+
+
+资源服务器可以直接发布j w t令牌，客户端拿着jwt去资源服务器直接去验证访问；
+
+![image-20230324135159787](../../../../../../../md-imgs-file/image-20230324135159787.png)
+
+
+
+
+
+
+
+```java
+public void jwtdemo(){
+        JwtBuilder builder = Jwts.builder();
+
+        long m = System.currentTimeMillis();
+        // 过期时间两分钟
+        Long exp = m + 2 * 60 * 1000;
+
+        // 设置载体和声明
+        builder.setId("8888")
+                .setSubject("测试jwt")
+                .setIssuedAt(new Date(m))
+                .setExpiration(new Date(exp))
+                .claim("role", "admin")
+                .claim("manager", "root")
+                // 设置加密算法和密钥 hS256各种语言都支持
+                .signWith(SignatureAlgorithm.HS256, "zjy-key");
+
+
+        String compact = builder.compact();
+
+        System.out.println(compact);
+
+        String[] split = compact.split("\\.");
+
+
+        System.out.println(Base64Codec.BASE64.decodeToString(split[0]));
+        System.out.println(Base64Codec.BASE64.decodeToString(split[1]));
+        System.out.println(Base64Codec.BASE64.decodeToString(split[2]));
+
+    }
+
+    public void jwtDecode(){
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4ODg4Iiwic3ViIjoi5rWL6K-Vand0IiwiaWF0IjoxNjc5NjM5Mzg5LCJleHAiOjE2Nzk2Mzk1MDksInJvbGUiOiJhZG1pbiIsIm1hbmFnZXIiOiJyb290In0.busqR0xDQFG7LolUBpecnBhp5ECNUjetUEXV58xHdJ0";
+        Claims body = Jwts.parser().setSigningKey("zjy-key").parseClaimsJws(token).getBody();
+        System.out.println(body);
+//        {jti=8888, sub=测试jwt, iat=1679637865}
+        Date issuedAt = body.getIssuedAt();
+        Date expiration = body.getExpiration();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("生效时间：" +simpleDateFormat.format(issuedAt));
+        System.out.println("过期时间：" + simpleDateFormat.format(expiration));
+        System.out.println("当前时间：" + simpleDateFormat.format(new Date()));
+
+        /*{jti=8888, sub=测试jwt, iat=1679639389, exp=1679639509, role=admin, manager=root}
+        生效时间：2023-03-24 14:29:49
+        过期时间：2023-03-24 14:31:49
+        当前时间：2023-03-24 14:31:07*/
+    }
+```
+# 修改客户端数据默认的内存模式
+```java
+clients.inMemory()
+        // 客户端ID
+        .withClient("client")
+        // 密钥
+        .secret(passwordEncoder.encode("112233"))
+        // 重定向地址
+//                .redirectUris("http://www.baidu.com") http://localhost:8015/login
+        //
+        .redirectUris("http://localhost:8016/login")
+        // 授权范围
+        .scopes("all")
+        /** 授权类型
+          * authorization_code： 授权码模式
+          * password：密码模式
+          */
+.authorizedGrantTypes("authorization_code","password","refresh_token")
+//                // 设置令牌失效时间 60秒
+        .accessTokenValiditySeconds(6000)
+//                // 刷新令牌失效时间
+        .refreshTokenValiditySeconds(8000)
+//                // 是否自动授权
+        .autoApprove(true);
+```
+
+DROP TABLE IF EXISTS `oauth_client_details`; CREATE TABLE `oauth_client_details` ( `client_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '客户端标 识',`resource_ids` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入资源列表', `client_secret` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '客户端秘钥', `scope` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, `authorized_grant_types` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, `web_server_redirect_uri` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, `authorities` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, `access_token_validity` int(11) NULL DEFAULT NULL, `refresh_token_validity` int(11) NULL DEFAULT NULL, `additional_information` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL, `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0), `archived` tinyint(4) NULL DEFAULT NULL, `trusted` tinyint(4) NULL DEFAULT NULL, `autoapprove` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, PRIMARY KEY (`client_id`) USING BTREE ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '接入客户端信息' ROW_FORMAT = Dynamic; 
+INSERT INTO `oauth_client_details` VALUES ('c1', 'res1', '$2a$10$NlBC84MVb7F95EXYTXwLneXgCca6/GipyWR5NHm8K0203bSQMLpvm', 'ROLE_ADMIN,ROLE_USER,ROLE_API', 'client_credentials,password,authorization_code,implicit,refresh_token', 'http://www.baidu.com', NULL, 7200, 259200, NULL, '2019‐09‐09 16:04:28', 0, 0, 'false'); INSERT INTO `oauth_client_details` VALUES ('c2', 'res2', '$2a$10$NlBC84MVb7F95EXYTXwLneXgCca6/GipyWR5NHm8K0203bSQMLpvm', 'ROLE_API', 'client_credentials,password,authorization_code,implicit,refresh_token', 'http://www.baidu.com', NULL, 31536000, 2592000, NULL, '2019‐09‐09 21:48:51', 0, 0, 'false');
