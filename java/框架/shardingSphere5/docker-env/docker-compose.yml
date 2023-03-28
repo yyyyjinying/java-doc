@@ -1,0 +1,40 @@
+version: "2"
+networks:
+  shardingsphere_mysql_net:
+services:
+  mysql-master:
+    image: mysql:8.0.29
+    container_name: mysql-master
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - ./mysql-sharding/master/conf:/etc/mysql/conf.d
+      - ./mysql-sharding/master/data:/var/lib/mysql
+    ports:
+      - 3307:3306
+    networks:
+      - shardingsphere_mysql_net
+  mysql-slave1:
+    image: mysql:8.0.29
+    container_name: mysql-slave1
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - ./mysql-sharding/slave1/conf:/etc/mysql/conf.d
+      - ./mysql-sharding/slave1/data:/var/lib/mysql
+    ports:
+      - 3308:3306
+    networks:
+      - shardingsphere_mysql_net
+  mysql-slave2:
+    image: mysql:8.0.29
+    container_name: mysql-slave2
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - ./mysql-sharding/slave2/conf:/etc/mysql/conf.d
+      - ./mysql-sharding/slave2/data:/var/lib/mysql
+    ports:
+      - 3309:3306
+    networks:
+      - shardingsphere_mysql_net
