@@ -64,3 +64,8 @@ electronicFenceList.stream()
 23. oCardCallBackVOS.stream().map(AlarmLogDTO::getCardId).distinct().collect(Collectors.toList())
 24. userDataVOS.stream().collect(Collectors.toMap(UserDataVO::getCardId, Function.identity(), (key1, key2) -> key2, HashMap::new))
 25. BeanUtils.copyProperties(userMap, user);
+26. SpringUtils.getBean(Zlass);
+27. return JSON.parseObject(responseEntityStr, R.class);
+28.hutool工具，将转化为bean TokenResultVO result = BeanUtil.fillBeanWithMap(map, new TokenResultVO(), true, false);
+        result.setExpiressIn((Integer)map.get("expires_in"));
+        

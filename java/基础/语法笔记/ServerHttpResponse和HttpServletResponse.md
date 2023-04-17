@@ -1,0 +1,4 @@
+
+HttpServletRequest 是tomcat提供的。
+ServerHttpRequest 是 spring框架提供的。
+ServletServerHttpRequest 将 HttpServletRequest 作为自己的一个成员属性。
