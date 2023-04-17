@@ -12,3 +12,5 @@ curl -s "https://get.sdkman.io" | bash
 > ls /Users/yyyyjinying/.sdkman/candidates/java
 > sdk use java 8.0.362-zulu
 > java -version
+>
+# shift + command + .     可以快速切换查看隐藏文件
