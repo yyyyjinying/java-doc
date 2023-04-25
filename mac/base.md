@@ -8,9 +8,16 @@ cp -rf aaa ./bbb.  //深拷贝文件夹
 # 查看文件
 - ls -l     // 查看文件以及详细权限信息
 - ls -a -l  // 查看包括隐藏文件的详细权限信息
-- 
+
+sh startup.sh -m standalone
 # mac配置hosts
-- vim /etc/hosts
+10.27.64.141 air-qar-localhost
+- sudo vi /etc/hosts
+139.159.228.183 ecs-QAR1
+121.37.213.3    ecs-QAR2
+192.168.1.3     homehost
+192.168.94.53   phonehost
+
 172.16.147.182      redis
 172.16.147.182      rabbitmq
 172.16.147.182      solr

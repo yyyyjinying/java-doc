@@ -38,3 +38,89 @@
 - - many 属性则是集合关联
 - @Property 与pojo保持一致，指定参数值或占位符
 - column="{自定义参数名=字段名,…}"
+
+# 分页实现
+## 一 limit
+```java
+    @Override
+    public List<ExamRecord> getExamRecord(String columnValue, ExamRecord examRecord, Integer currentPage, Integer pageSize) {
+        Integer cur = currentPage - 1;
+        return examRecordMapper.getExamRecord(columnValue, examRecord, cur, pageSize);
+    }
+List<ExamRecord> getExamRecord(
+           @Param("columnValue") String columnValue,
+           @Param("exam") ExamRecord exam,
+           @Param("currentPage") Integer currentPage,
+           @Param("pageSize") Integer pageSize);
+```
+```xml
+<select id="getExamRecord" resultMap="examResultMap">
+        select
+        <choose>
+            <when test="columnValue!=null and columnValue!=''">
+                ${columnValue}
+            </when>
+            <otherwise>
+                *
+            </otherwise>
+        </choose>
+        from exam_record
+        <where>
+            <if test="exam!=null and exam.uid!=null and exam.uid!=''">
+                uid=#{exam.uid}
+            </if>
+            <if test="exam!=null and exam.examId!=null and exam.examId!=''">
+                  AND exam_id like concat('%', #{exam.examId}, '%')
+            </if>
+        </where>
+        limit ${currentPage},${pageSize}
+    </select>
+<resultMap id="examResultMap" type="com.example.domain.romtest.ExamRecord">
+        <id property="id" column="id"></id>
+        <result property="uid" column="uid"></result>
+        <result property="examId" column="exam_id"></result>
+        <result property="startTime" column="start_time"></result>
+        <result property="submitTime" column="submit_time"></result>
+        <result property="score" column="score"></result>
+    </resultMap>
+```
+## 二 RowBounds分页
+```java
+@Override
+    public List<ExamRecord> queryExamByPage(Integer currentPage, Integer pageSize) {
+
+        return examRecordMapper.queryExamByPage(new RowBounds(currentPage - 1, pageSize));
+    }
+```
+```xml
+<select id="queryExamByPage" resultType="com.example.domain.romtest.ExamRecord">
+        select * from exam_record
+    </select>
+```
+## 三 PageHelper
+```java
+@Override
+    public PageInfo<Brand> findAllUserByPage(int pageNum, int pageSize) {
+        List<Brand> list = brandMapper.selectList(null);
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<Brand> pageInfo = new PageInfo(list);
+
+        return pageInfo;
+    }
+@Override
+    public CommonPage<Brand> findBrandByPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Brand> list = brandMapper.selectList(null);
+        CommonPage<Brand> brandList = CommonPage.restPage(list);
+        return brandList;
+    }
+@ApiOperation("查询商品")
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<CommonPage<PmsProduct>> getList(PmsProductQueryParam productQueryParam,
+                                                        @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                        @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+        List<PmsProduct> productList = productService.list(productQueryParam, pageSize, pageNum);
+        return CommonResult.success(CommonPage.restPage(productList));
+    }
+```

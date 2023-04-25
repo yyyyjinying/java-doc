@@ -45,3 +45,10 @@ npm resource manager
 - n use xx.xx.x a.js
 
 # nvm use --delete-prefix v15.14.0 --silent
+nvm use --delete-prefix v16.20.0 --silent
+
+nvm use --delete-prefix v18.15.0 --silent
+
+which node
+
+sudo npm install --save element-plus@^2.2.28
