@@ -6,3 +6,7 @@ CMD ["demo.jar"]
 
 docker build -t demo-01:v1
 docker run -d -p 6060:6060 --name demo-01 demo-01:v1
+
+docker run --rm -d --name gateway gateway:v1
+docker network connect qar-net
+docker network create qar-net

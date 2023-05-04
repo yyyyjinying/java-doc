@@ -1,0 +1,10 @@
+version: "3"
+services:
+  test1:
+    image: ubuntu:latest
+    networks:
+      - app_net
+    container_name: test1
+networks:
+  app_net:
+    external: true
